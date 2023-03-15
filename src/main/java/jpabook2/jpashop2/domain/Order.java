@@ -28,6 +28,7 @@ public class Order {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id") // mapping 을 뭐로 할 건지.
     // FK 이름이 member_id 되는것.
+    // 양방향 연관관계에서 N:1 관계에서는 무조건 테이블상 FK 가 있는 N 쪽이 연관관계 주인이 되어야 함.
     private Member member;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
@@ -43,9 +44,10 @@ public class Order {
     private OrderStatus status; // 주문상태 [ORDER, CANCEL]
 
     //==연관관계 편의 메서드==// 양방향 연관관계를 묶어주는 메서드
+    // 연관관계 편의 메서드는 상황에 따라서 1 에 넣을지 N 에 넣을지 결정하면 됨. 다만 한쪽에만 만들어야 하고 양쪽에 만들면 안된다.
     public void setMember(Member member) {
-        this.member = member;
-        member.getOrders().add(this);
+        this.member = member; // setMember 를 하는 코드
+        member.getOrders().add(this); // List<Orders> 에 나 자신 Member 의 인스턴스를 넣는 메서드 (연관관계 설정상)
     }
 
     public void addOrderItem(OrderItem orderItem) {

@@ -82,6 +82,8 @@ public class ItemController {
         //사실 위의 컨트롤러에서 엔티티를 생성하는 코드는 좋지 않은 코드임.
         //BookForm 을 웹계층에서만 쓰고자 만들었고, form 에서 book 으로 set 을 통해 담았지만,
         //더 나은 설계는 ItemService 에서 updateItem() 메서드를 통해 파라미터 값을 넘겨서 update 를 하는 것이다. (파라미터는 form.getName() 이런식)
+        //엔티티는 컨트롤러에서 반환하면 안된다. 엔티티를 api 에 반환하면 안된다.
+        //엔티티는 dto 로 변환을 해서 반환하는 것이 좋다.
 
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
         return "redirect:/items";
